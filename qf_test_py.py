@@ -16,11 +16,11 @@ from typing import NamedTuple
 logger = getLogger("info")
 
 class IndicatorSettingsArrays(NamedTuple):
-    ema_length = np.array
-    fast_length = np.array
-    macd_below = np.array
-    signal_smoothing = np.array
-    slow_length = np.array
+    ema_length: np.array
+    fast_length: np.array
+    macd_below: np.array
+    signal_smoothing: np.array
+    slow_length: np.array
     
 class MACDandEMA(Strategy):
     ema_length = None
@@ -32,11 +32,11 @@ class MACDandEMA(Strategy):
     def __init__(
         self,
         long_short: str,
-        ema_length = np.array,
-        fast_length = np.array,
-        macd_below = np.array,
-        signal_smoothing = np.array,
-        slow_length = np.array,
+        ema_length: np.array,
+        fast_length: np.array,
+        macd_below: np.array,
+        signal_smoothing: np.array,
+        slow_length: np.array,
     ):
         self.long_short = long_short
         self.log_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
