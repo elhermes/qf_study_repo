@@ -22,7 +22,7 @@ class IndicatorSettingsArrays(NamedTuple):
     signal_smoothing = np.array
     slow_length = np.array
     
-class MACD_EMA(Strategy):
+class MACDandEMA(Strategy):
     ema_length = None
     fast_length = None
     macd_below = None
@@ -85,11 +85,11 @@ class MACD_EMA(Strategy):
                 closing_prices = candles[:, CandleBodyType.Close]
                 low_prices = candles[:, CandleBodyType.Low]
                 
-                self.ema_lenght = self.indicator_settings_arrays.ema_length[ind_set_index]
-                self.fast_lenght = self.indicator_settings_arrays.fast_length[ind_set_index]
+                self.ema_length = self.indicator_settings_arrays.ema_length[ind_set_index]
+                self.fast_length = self.indicator_settings_arrays.fast_length[ind_set_index]
                 self.macd_below = self.indicator_settings_arrays.macd_below[ind_set_index]
                 self.signal_smoothing = self.indicator_settings_arrays.signal_smoothing[ind_set_index]
-                self.slow_lenght = self.indicator_settings_arrays.slow_length[ind_set_index]                                                    
+                self.slow_length = self.indicator_settings_arrays.slow_length[ind_set_index]                                                    
                 
                 self.histogram, self.macd, self.signal = macd_tv(
                     source=closing_prices,
@@ -173,7 +173,7 @@ class MACD_EMA(Strategy):
         #Candlestick chart for pricing
         fig.append_trace(
             go.Candlestick(
-                x=datetimes,
+                x=self.datetimes,
                 open=candles[:, CandleBodyType.Open],
                 high=candles[:, CandleBodyType.High],
                 low=candles[:, CandleBodyType.Low],
@@ -185,7 +185,7 @@ class MACD_EMA(Strategy):
         )
         fig.append_trace(
             go.Scatter(
-                x=datetimes,
+                x=self.datetimes,
                 y=self.ema,
                 name="EMA",
                 line_color="yellow",
@@ -202,7 +202,7 @@ class MACD_EMA(Strategy):
         )
         fig.append_trace(
             go.Bar(
-                x=datetimes,
+                x=self.datetimes,
                 y=self.histogram,
                 name="histogram",
                 marker_color=colors,
@@ -212,7 +212,7 @@ class MACD_EMA(Strategy):
         )
         fig.append_trace(
             go.Scatter(
-                x=datetimes,
+                x=self.datetimes,
                 y=self.macd,
                 name="macd",
                 line_color="#2962FF",
@@ -222,7 +222,7 @@ class MACD_EMA(Strategy):
         )
         fig.append_trace(
             go.Scatter(
-                x=datetimes,
+                x=self.datetimes,
                 y=self.signal,
                 name="signal",
                 line_color="#FF6D00",
@@ -232,7 +232,7 @@ class MACD_EMA(Strategy):
         )
         fig.append_trace(
             go.Scatter(
-                x=datetimes,
+                x=self.datetimes,
                 y=self.entry_signals,
                 mode="markers",
                 name="entries",
